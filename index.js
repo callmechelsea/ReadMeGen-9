@@ -1,63 +1,76 @@
-// TODO: Include packages needed for this application
-const inquirer = require('path')
-const fs = require('fs')
+const inquirer = require("inquirer");
+const fs = require("fs");
+const generateMarkdown = require("./generateMarkdown");
 
 
-// TODO: Create an array of questions for user input
+// array of questions for user
 const questions = [
-    {
-        type: 'input',
-        name: 'title',
-        message: 'What is the title of your project?',
-    },
-    {
-        type: 'input',
-        name: 'description',
-        message: 'Write a description about your project',
-    },
-    {
-        type: 'input',
-        name: 'installation',
-        message: 'What command should be run to install dependencies',
-    },
-    {
-        type: 'input',
-        name: 'test',
-        message: 'What command needs to be run to test?',
-    },
-    {
-        type: 'input',
-        name: 'usage',
-        message: 'What does the user need to know about using the repo?',
-    },
-    {
-        type: 'input',
-        name: 'contributing',
-        message: 'What does the user need to know about contributing to repo?',
-    },
-    {
-        type: 'list',
-        name: 'license',
-        message: 'What license does your project have?',
-        choices: ['MIT', 'APACHE 2.0', 'GPL 3.0', 'BSD 3', 'None'], 
-    },
-    {
-        type: 'input',
-        name: 'github',
-        message: 'What is your GitHub username?',
-      },
-      {
-        type: 'input',
-        name: 'email',
-        message: 'What is your email address?',
-      },
+  {
+    type: "input",
+    name: "title",
+    message: "Enter the title of the readme file.",
+  },
+  {
+    type: "input",
+    name: "description",
+    message: "Enter the description of the readme file.",
+  },
+  {
+    type: "input",
+    name: "installationInstructions",
+    message: "Enter the installation instructions of the readme file.",
+  },
+  {
+    type: "input",
+    name: "usageInformation",
+    message: "Enter the usage information of the readme file.",
+  },
+  {
+    type: "input",
+    name: "contributionGuidelines",
+    message: "Enter the contribution guidelines of the readme file.",
+  },
+  {
+    type: "list",
+    name: "license",
+    message: "Select the license of the readme file.",
+    choices: ["MIT", "Apache 2.0", "GPL 3.0", "BSD 3", "None"],
+  },
+  {
+    type: "input",
+    name: "githubUsername",
+    message: "Enter your GitHub user name.",
+  },
+  {
+    type: "input",
+    name: "emailAddress",
+    message: "Enter your email address.",
+  },
+  {
+    type: "input",
+    name: "fullName",
+    message: "Enter your full name.",
+  },
+  {
+    type: "input",
+    name: "year",
+    message: "Enter the current year.",
+  },
 ];
 
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+// function to write README file
+function writeToFile(fileName, data) {
+  fs.writeFile(fileName, generateMarkdown(data), (err) =>
+    err ? console.error(err) : console.log("Saved")
+  );
+}
 
-// TODO: Create a function to initialize app
-function init() {}
+// function to initialize program
+function init() {
+  inquirer.prompt(questions).then((response) => {
+    writeToFile("exampleREADME.md", response);
+  });
+}
 
-// Function call to initialize app
+// function call to initialize program
 init();
